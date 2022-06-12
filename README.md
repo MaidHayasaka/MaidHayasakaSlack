@@ -1,0 +1,2 @@
+# MaidHayasakaSlack
+MaidHayasaka Slack Impl
