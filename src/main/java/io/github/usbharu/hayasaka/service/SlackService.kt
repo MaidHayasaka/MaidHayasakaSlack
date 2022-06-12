@@ -1,4 +1,4 @@
-package io.github.usbharu.hayasaka.slack
+package io.github.usbharu.hayasaka.service
 
 import io.github.usbharu.hayasaka.api.MessageOperation
 import io.github.usbharu.hayasaka.api.ReactionOperation
