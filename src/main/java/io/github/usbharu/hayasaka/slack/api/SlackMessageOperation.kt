@@ -13,28 +13,21 @@ import io.github.usbharu.hayasaka.util.SlackUtil
 class SlackMessageOperation : MessageOperation {
     override fun postMessage(postMessage: PostMessage): PostMessageResponse {
         return postMessage(
-            postMessage.message,
-            postMessage.messageType,
-            postMessage.channel,
-            postMessage.replyTo
+            postMessage.message, postMessage.messageType, postMessage.channel, postMessage.replyTo
         )
     }
 
     override fun postMessage(
-        message: String, messageType: MessageType, channel: Channel,
-        replyTo: Message?
+        message: String, messageType: MessageType, channel: Channel, replyTo: Message?
     ): PostMessageResponse {
         if (replyTo is SlackMessage) {
-            SlackUtil.chatPostMessage(message, channel.toString(), replyTo.message)
+            SlackUtil.chatPostMessage(message, channel.toString(), replyTo.timeStamp)
         } else {
             SlackUtil.chatPostMessage(message, channel.toString())
         }
         return PostMessageResponse(
             SlackMessage(
-                message,
-                SlackUser("Hayasaka"),
-                messageType,
-                channel
+                message, "", SlackUser("Hayasaka"), messageType, channel
             )
         )
     }

@@ -2,9 +2,11 @@ package io.github.usbharu.hayasaka.util
 
 import com.slack.api.Slack
 import com.slack.api.methods.request.auth.AuthTestRequest
+import com.slack.api.methods.request.chat.ChatPostMessageRequest
 import com.slack.api.methods.request.conversations.ConversationsHistoryRequest
 import com.slack.api.methods.request.conversations.ConversationsMembersRequest
 import com.slack.api.methods.request.conversations.ConversationsRepliesRequest
+import com.slack.api.methods.response.chat.ChatPostMessageResponse
 import com.slack.api.methods.response.conversations.ConversationsMembersResponse
 import com.slack.api.model.Message
 
@@ -20,7 +22,7 @@ object SlackUtil {
     }
 
     fun getBotUserId(): String {
-        return slack.methods(token).authTest(AuthTestRequest.builder().build()).getUserId()
+        return slack.methods(token).authTest(AuthTestRequest.builder().build()).userId
     }
 
     fun getMessage(channelId: String, timeStamp: String): String {
@@ -56,8 +58,20 @@ object SlackUtil {
         throw java.lang.IllegalArgumentException("Message not found channel : $channelId timeStamp : $timeStamp")
     }
 
-    fun chatPostMessage(text: String, channelId: String, timeStamp: String? = null) {
-
+    fun chatPostMessage(
+        text: String,
+        channelId: String,
+        timeStamp: String? = null
+    ): ChatPostMessageResponse? {
+        if (timeStamp == null) {
+            return slack.methods(token).chatPostMessage(
+                ChatPostMessageRequest.builder().channel(channelId).text(text).build()
+            )
+        }
+        return slack.methods(token).chatPostMessage(
+            ChatPostMessageRequest.builder().channel(channelId).text(text).threadTs(timeStamp)
+                .build()
+        )
     }
 
 

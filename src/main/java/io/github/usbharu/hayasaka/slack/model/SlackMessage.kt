@@ -5,6 +5,12 @@ import io.github.usbharu.hayasaka.model.Message
 import io.github.usbharu.hayasaka.model.MessageType
 import io.github.usbharu.hayasaka.model.User
 
-class SlackMessage(message: String, sender: User, messageType: MessageType, channel: Channel) :
+class SlackMessage(
+    message: String,
+    val timeStamp: String,
+    sender: User,
+    messageType: MessageType,
+    channel: Channel
+) :
     Message(message, sender, messageType, channel) {
 }

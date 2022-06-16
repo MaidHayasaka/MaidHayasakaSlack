@@ -40,6 +40,7 @@ class SlackService : Service() {
                     EventType.MESSAGE_ADD,
                     SlackMessage(
                         req.event.text,
+                        req.event.ts,
                         SlackUser(req.event.user),
                         MessageType.PUBLIC,
                         SlackChannel(req.event.channel, ChannelType.PUBLIC)
@@ -60,6 +61,7 @@ class SlackService : Service() {
                                 req.event.item.channel,
                                 req.event.eventTs
                             ),
+                            req.event.item.ts,
                             SlackUser(req.event.user),
                             MessageType.PUBLIC,
                             SlackChannel(req.event.item.channel, ChannelType.PUBLIC)
