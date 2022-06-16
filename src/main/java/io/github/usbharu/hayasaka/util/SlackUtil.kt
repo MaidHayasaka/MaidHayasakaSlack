@@ -62,7 +62,7 @@ object SlackUtil {
         text: String,
         channelId: String,
         timeStamp: String? = null
-    ): ChatPostMessageResponse? {
+    ): ChatPostMessageResponse {
         if (timeStamp == null) {
             return slack.methods(token).chatPostMessage(
                 ChatPostMessageRequest.builder().channel(channelId).text(text).build()
