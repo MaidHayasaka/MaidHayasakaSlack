@@ -55,4 +55,10 @@ object SlackUtil {
         }
         throw java.lang.IllegalArgumentException("Message not found channel : $channelId timeStamp : $timeStamp")
     }
+
+    fun chatPostMessage(text: String, channelId: String, timeStamp: String? = null) {
+
+    }
+
+
 }

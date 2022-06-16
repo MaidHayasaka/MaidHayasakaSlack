@@ -6,16 +6,36 @@ import io.github.usbharu.hayasaka.api.PostMessageResponse
 import io.github.usbharu.hayasaka.model.Channel
 import io.github.usbharu.hayasaka.model.Message
 import io.github.usbharu.hayasaka.model.MessageType
+import io.github.usbharu.hayasaka.slack.model.SlackMessage
+import io.github.usbharu.hayasaka.slack.model.SlackUser
+import io.github.usbharu.hayasaka.util.SlackUtil
 
 class SlackMessageOperation : MessageOperation {
     override fun postMessage(postMessage: PostMessage): PostMessageResponse {
-        TODO()
+        return postMessage(
+            postMessage.message,
+            postMessage.messageType,
+            postMessage.channel,
+            postMessage.replyTo
+        )
     }
 
     override fun postMessage(
-        s: String, messageType: MessageType, channel: Channel,
-        message: Message?
+        message: String, messageType: MessageType, channel: Channel,
+        replyTo: Message?
     ): PostMessageResponse {
-        TODO()
+        if (replyTo is SlackMessage) {
+            SlackUtil.chatPostMessage(message, channel.toString(), replyTo.message)
+        } else {
+            SlackUtil.chatPostMessage(message, channel.toString())
+        }
+        return PostMessageResponse(
+            SlackMessage(
+                message,
+                SlackUser("Hayasaka"),
+                messageType,
+                channel
+            )
+        )
     }
 }
