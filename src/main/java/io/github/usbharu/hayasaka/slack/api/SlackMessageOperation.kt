@@ -1,6 +1,5 @@
 package io.github.usbharu.hayasaka.slack.api
 
-import com.slack.api.methods.response.chat.ChatPostMessageResponse
 import io.github.usbharu.hayasaka.api.MessageOperation
 import io.github.usbharu.hayasaka.api.PostMessage
 import io.github.usbharu.hayasaka.api.PostMessageResponse
@@ -23,11 +22,10 @@ class SlackMessageOperation : MessageOperation {
     override fun postMessage(
         message: String, messageType: MessageType, channel: Channel, replyTo: Message?
     ): PostMessageResponse {
-        var response: ChatPostMessageResponse
-        if (replyTo is SlackMessage) {
-            response = SlackUtil.chatPostMessage(message, channel.toString(), replyTo.timeStamp)
+        val response = if (replyTo is SlackMessage) {
+            SlackUtil.chatPostMessage(message, channel.toString(), replyTo.timeStamp)
         } else {
-            response = SlackUtil.chatPostMessage(message, channel.toString())
+            SlackUtil.chatPostMessage(message, channel.toString())
         }
         return PostMessageResponse(
             SlackMessage(
